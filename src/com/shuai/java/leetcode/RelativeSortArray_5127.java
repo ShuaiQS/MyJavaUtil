@@ -32,6 +32,11 @@ public class RelativeSortArray_5127 {
             }
         }
         List<Map.Entry<Integer,Integer>> list = new ArrayList<>(map.entrySet());
+//      相对较慢
+        list.sort((Map.Entry<Integer,Integer> o1,Map.Entry<Integer,Integer> o2)-> o1.getKey().compareTo(o2.getKey()));
+//      相对较慢
+        list.sort(Comparator.comparing(Map.Entry::getKey));
+//      相对速度最快
         list.sort(new Comparator<Map.Entry<Integer, Integer>>() {
             @Override
             public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
