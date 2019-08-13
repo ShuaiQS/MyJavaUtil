@@ -8,10 +8,13 @@ public class KnapsackProblem {
     public static void main(String[] args) {
         int[] price = {2,3,4};
         int[] weight = {3,4,5};
-        int[] nums = {4,3,2};
+//        int[] nums = {4,3,2};
         int limit = 15;
 //        System.out.println(new KnapsackProblem().knapsack_All(price, weight, limit));
-        System.out.println(new KnapsackProblem().knapsack_Multi(price, weight, nums, limit));
+        int[] coint = {1,5,10,20,50,100};
+        int[] nums = {6,5,4,3,2,1};
+        System.out.println(process(coint,nums,11));
+//        System.out.println(new KnapsackProblem().knapsack_Multi(price, weight, nums, limit));
     }
     /**
      * 01背包问题：
@@ -57,7 +60,6 @@ public class KnapsackProblem {
                 }
             }
         }
-
         return dp[n][limit];
     }
 
@@ -89,6 +91,27 @@ public class KnapsackProblem {
         }
 
         return dp[n][limit];
+    }
+
+    private static int process(int[] coins, int[] nums, int n){
+        int[][] d = new int[coins.length+1][n+1];
+        for(int i = 0;i<=coins.length;i++)
+            d[i][0] = 1;
+        for(int i = 1 ;i<=coins.length;i++){
+            for(int sum = 1;sum<=n;sum++){
+                for(int k=0;k<=nums[i-1]&&k<=sum/coins[i-1];k++){
+                    d[i][sum] +=d[i-1][sum-k*coins[i-1]];
+                }
+            }
+        }
+        for(int i=0;i<coins.length+1;i++){
+            for(int j=0;j<=n;j++){
+                System.out.print(d[i][j]+" ");
+            }
+            System.out.println();
+        }
+        return d[coins.length][n];
+
     }
 
 }
